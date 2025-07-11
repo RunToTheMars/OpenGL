@@ -1,6 +1,5 @@
 #include "GL/Widget.h"
 #include "GL/KeyEvent.h"
-#include "GL/MouseEvent.h"
 #include <algorithm>
 
 namespace GL
@@ -78,25 +77,25 @@ void Widget::keyEventPrivate (const KeyEvent &event)
   keyEvent (event);
 }
 
-bool Widget::mouseEventPrivate (const MouseEvent &event)
-{
-  if (!mIsVisible)
-    return false;
+// bool Widget::mouseEventPrivate (const MouseEvent &event)
+// {
+//   if (!mIsVisible)
+//     return false;
 
-  if (!mRect.contains (event.position ().toPoint ()))
-    return false;
+//   if (!mRect.contains (event.position ().toPoint ()))
+//     return false;
 
-  if (mouseEvent (event))
-    return true;
+//   if (mouseEvent (event))
+//     return true;
 
-  for (const std::unique_ptr<Widget> &children : mChildrens)
-    {
-      if (children->mouseEventPrivate (event))
-        return true;
-    }
+//   for (const std::unique_ptr<Widget> &children : mChildrens)
+//     {
+//       if (children->mouseEventPrivate (event))
+//         return true;
+//     }
 
-  return false;
-}
+//   return false;
+// }
 
 void Widget::renderEventPrivate ()
 {
@@ -135,10 +134,10 @@ void Widget::keyEvent (const GL::KeyEvent & /*event*/)
 {
 }
 
-bool Widget::mouseEvent (const GL::MouseEvent & /*event*/)
-{
-  return false;
-}
+// bool Widget::mouseEvent (const GL::MouseEvent & /*event*/)
+// {
+//   return false;
+// }
 
 void Widget::renderEvent ()
 {

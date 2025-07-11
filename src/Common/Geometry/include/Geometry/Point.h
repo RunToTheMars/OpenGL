@@ -67,7 +67,7 @@ constexpr inline Point::Point (int x, int y) noexcept : mData {x, y}
 {
 }
 
-constexpr inline Point::Point (const Point &point) noexcept : mData {mData[0], mData[1]}
+constexpr inline Point::Point (const Point &point) noexcept : mData {point.mData[0], point.mData[1]}
 {
 }
 

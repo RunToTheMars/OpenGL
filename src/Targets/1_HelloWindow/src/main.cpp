@@ -1,48 +1,38 @@
-#include "GL/KeyEvent.h"
-#include "GL/Widget.h"
-#include "GL/Widgets/FrameRateWidget.h"
+#include "GL/Application.h"
+#include "GL/Monitor.h"
 #include "GL/Window.h"
+#include "Geometry/PointF.h"
 #include <GL/glew.h>
-
-class MainWidget : public GL::Widget
-{
-public:
-  MainWidget () noexcept
-  {
-    addWidget (std::make_unique<GL::FrameRateWidget> ());
-  }
-  ~MainWidget () noexcept override = default;
-
-private:
-  void renderEvent () override
-  {
-    glClearColor (0.5f, 0.5f, 0.5f, 1.0f);
-    glClear (GL_COLOR_BUFFER_BIT);
-  }
-
-  void keyEvent (const GL::KeyEvent &event) override
-  {
-    if (event.key () == GL::Key::Key_Escape && event.action () == GL::KeyAction::Press)
-      GL::Window::getInstance ().close ();
-  }
-};
 
 int main ()
 {
-  GL::Window::getInstance ().create ({800, 600} /* size */, "Hello Window!")
-      .setResizable (true)
-      .setDecorated (true)
-      .setVisible (true)
-      .setMaximized (true)
-      .setFocused (true)
-      .setAutoIconify (true)
-      .setVersionMajor (3)
-      .setVersionMinor (3)
-      .setOpenGLProfile (GL::WindowCreateConfig::Profile::Core);
+  GL::Application::init ();
 
-  if (glewInit () != GLEW_OK)
-    throw std::runtime_error ("Can't init glew");
+  glewInit ();
 
+  GL::Window window ("Hello Window", GL::Application::primaryMonitor ());
 
-  GL::Window::getInstance ().open (std::make_unique<MainWidget> ());
+  Common::Signal<Geometry::Point>::Connection posChangedConnect = window.posChanged.connect ([&] (Geometry::Point pos) {
+    (void) pos;
+  });
+
+  Common::Signal<Geometry::Size>::Connection sizeChangedConnect = window.sizeChanged.connect ([&] (Geometry::Size size) {
+    (void) size;
+  });
+
+  Common::Signal<bool>::Connection iconofiedConnect = window.iconified.connect ([&] (bool iconified) {
+    (void) iconified;
+  });
+
+  Common::Signal<bool>::Connection maximizedConnect = window.maximized.connect ([&] (bool maximized) {
+    (void) maximized;
+  });
+
+  // Common::Signal<>::Connection closeNeededConnect = window1.closeNeeded.connect ([&] () {
+  //   window1.setMonitor (GL::Application::primaryMonitor (), {200, 100}, 144);
+  // });
+
+  GL::Application::exec ();
+
+  return 0;
 }

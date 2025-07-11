@@ -8,7 +8,7 @@
 namespace GL
 {
 class KeyEvent;
-class MouseEvent;
+// class MouseEvent;
 class WindowCreateConfig;
 
 class Widget
@@ -39,14 +39,14 @@ public:
 
 protected:
   virtual void keyEvent (const KeyEvent &event);
-  virtual bool mouseEvent (const MouseEvent &event);
+  // virtual bool mouseEvent (const MouseEvent &event);
   virtual void renderEvent ();
 
 private:
   friend class WindowCreateConfig;
   friend class Window;
   void keyEventPrivate (const KeyEvent &event);
-  bool mouseEventPrivate (const MouseEvent &event);
+  // bool mouseEventPrivate (const MouseEvent &event);
   void renderEventPrivate ();
 
 private:
